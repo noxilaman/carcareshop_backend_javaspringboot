@@ -30,16 +30,16 @@ public class CarApi {
     @GetMapping
     public MCarReq car(){
         MCarReq res = new MCarReq();
-        res.setI_car_size(1);
-        res.setS_license_code("etst");
-        res.setS_city("asdasd");
-        res.setS_note("asdasdasd");
+        res.setICarSize(1);
+        res.setSLicenseCode("etst");
+        res.setSCity("asdasd");
+        res.setSNote("asdasdasd");
         return res;
     }
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<String> getCarById(@PathVariable("id") String id){
+    public ResponseEntity<String> getCarById(@PathVariable("id") Integer id){
         MCarReq data = business.getCarById(id);
         return ResponseEntity.ok(data.toString());
     }
@@ -49,7 +49,6 @@ public class CarApi {
 
         String result = business.create(req);
             return ResponseEntity.ok(result);
-
 
     }
 
@@ -67,10 +66,10 @@ public class CarApi {
     @GetMapping(path="/addnew")
     public ResponseEntity<String> newcar() {
         Car car = new Car();
-        car.setS_license_code("asdasd");
-        car.setS_city("Asdasd");
-        car.setS_note("asdasdasd");
-        car.setI_car_size(5);
+        car.setSlicensecode("asdasd");
+        car.setScity("Asdasd");
+        car.setSnote("asdasdasd");
+        car.setIcarsize(5);
         carRepository.save(car);
         return ResponseEntity.ok("SAVE");
     }

@@ -4,4 +4,5 @@ import com.noxilaman.carcareshop.entity.Car;
 import org.springframework.data.repository.CrudRepository;
 
 public interface CarRepository extends CrudRepository<Car, Integer> {
+    boolean existsByslicensecode(String sLicenseCode);
 }

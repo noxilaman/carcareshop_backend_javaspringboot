@@ -9,18 +9,24 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.util.Date;
 
-@Entity(name = "cars")
+@Entity(name="users")
 @EntityListeners(AuditingEntityListener.class)
-@JsonIgnoreProperties(value = { "createdAt", "updatedAt" }, allowGetters = true)
+@JsonIgnoreProperties(value =  { "createdAt", "updatedAt" }, allowGetters = true)
 @Data
-public class Car {
+public class User {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer id;
-    private String slicensecode;
-    private String scity;
-    private Integer icarsize;
-    private String snote;
+
+    @Column(nullable = false, unique = true, length = 60)
+    private String email;
+
+    @Column(nullable = false,length = 120)
+    private String password;
+
+    @Column(nullable = false,length = 120)
+    private String name;
+
 
     @Column(nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -31,8 +37,4 @@ public class Car {
     @Temporal(TemporalType.TIMESTAMP)
     @LastModifiedDate
     private Date updatedAt;
-
-    @OneToOne(mappedBy = "car_sizes")
-    private CarSize carSize;
-
 }

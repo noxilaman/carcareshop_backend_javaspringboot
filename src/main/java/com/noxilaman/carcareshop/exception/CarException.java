@@ -16,4 +16,9 @@ public class CarException extends BaseException {
     public static CarException cityNull(){
         return new CarException("City.Null");
     }
+
+    public static CarException licenseCodeDuplication(){
+        return new CarException("LicenseCode.Duplicate");
+    }
+
 }

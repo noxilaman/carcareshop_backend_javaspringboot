@@ -6,7 +6,6 @@ import com.noxilaman.carcareshop.exception.CarException;
 import com.noxilaman.carcareshop.exception.FileException;
 import com.noxilaman.carcareshop.model.MCarReq;
 import com.noxilaman.carcareshop.repository.CarRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,31 +17,38 @@ import java.util.Objects;
 @Service
 public class CarBusiness {
 
-    @Autowired
-    private CarRepository carRepository;
+    private final CarRepository carRepository;
+
+    public CarBusiness(CarRepository carRepository){
+        this.carRepository = carRepository;
+    }
 
     public String create(MCarReq mcarreq) throws BaseException {
         if (mcarreq == null){
             throw CarException.allNull();
         }
-        if(Objects.isNull(mcarreq.getS_license_code())){
+        if(Objects.isNull(mcarreq.getSLicenseCode())){
             throw CarException.licenseCodeNull();
         }
 
-        if(Objects.isNull(mcarreq.getS_city())){
+        if(Objects.isNull(mcarreq.getSCity())){
             throw CarException.cityNull();
+        }
+
+        if(carRepository.existsByslicensecode(mcarreq.getSLicenseCode())){
+            throw CarException.licenseCodeDuplication();
         }
         Car car = new Car();
         car.setId(null);
-        car.setS_license_code(mcarreq.getS_license_code());
-        car.setS_city(mcarreq.getS_city());
-        car.setS_note(mcarreq.getS_note());
-        car.setI_car_size(mcarreq.getI_car_size());
+        car.setSlicensecode(mcarreq.getSLicenseCode());
+        car.setScity(mcarreq.getSCity());
+        car.setSnote(mcarreq.getSNote());
+        car.setIcarsize(mcarreq.getICarSize());
         carRepository.save(car);
         return "SAVE";
     }
 
-    public MCarReq getCarById(String id){
+    public MCarReq getCarById(Integer id){
         return new MCarReq();
     }
 
