@@ -49,7 +49,7 @@ public class TokenFilter extends GenericFilterBean {
             return;
         }
 
-        String principal = decodedJWT.getClaim("principal").asString();
+        Integer principal = decodedJWT.getClaim("principal").asInt();
         String role = decodedJWT.getClaim("role").asString();
 
         List<GrantedAuthority> authorities = new ArrayList<>();
@@ -59,5 +59,7 @@ public class TokenFilter extends GenericFilterBean {
 
         SecurityContext context = SecurityContextHolder.getContext();
         context.setAuthentication(authentication);
+
+        filterChain.doFilter(servletRequest,servletResponse);
     }
 }

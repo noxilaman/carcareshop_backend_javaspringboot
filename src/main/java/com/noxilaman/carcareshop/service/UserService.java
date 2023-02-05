@@ -82,4 +82,8 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    public Optional<User> findById(Integer id){
+        return userRepository.findById(id);
+    }
+
 }

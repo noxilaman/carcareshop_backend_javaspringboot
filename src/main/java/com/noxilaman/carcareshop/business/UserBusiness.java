@@ -10,6 +10,10 @@ import com.noxilaman.carcareshop.model.MUserReq;
 import com.noxilaman.carcareshop.model.MUserRes;
 import com.noxilaman.carcareshop.service.TokenService;
 import com.noxilaman.carcareshop.service.UserService;
+import com.noxilaman.carcareshop.utils.SecurityUtil;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -58,5 +62,23 @@ public class UserBusiness {
         return userMapper.mapListToMUserRes( userService.getAllUsers());
     }
 
+    public String refreshToken() throws BaseException {
+
+        Optional<Integer> opt = SecurityUtil.getCurrentUserId();
+        if (!opt.isPresent()){
+            throw UserException.userNull();
+        }
+
+        Integer userId = opt.get();
+
+        Optional<User> optUser = userService.findById(userId);
+        if(!optUser.isPresent()){
+            throw UserException.userNull();
+        }
+
+        User user = optUser.get();
+        return tokenService.tokenize(user);
+
+    }
 
 }
