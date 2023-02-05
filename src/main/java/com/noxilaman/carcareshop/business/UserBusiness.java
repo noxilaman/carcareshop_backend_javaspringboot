@@ -8,6 +8,7 @@ import com.noxilaman.carcareshop.mapper.UserMapper;
 import com.noxilaman.carcareshop.model.MLoginReq;
 import com.noxilaman.carcareshop.model.MUserReq;
 import com.noxilaman.carcareshop.model.MUserRes;
+import com.noxilaman.carcareshop.service.TokenService;
 import com.noxilaman.carcareshop.service.UserService;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +18,12 @@ import java.util.Optional;
 public class UserBusiness {
 
     private final UserService userService;
+    private final TokenService tokenService;
     private final UserMapper userMapper;
 
-    public UserBusiness(UserService userService, UserMapper userMapper) {
+    public UserBusiness(UserService userService, TokenService tokenService, UserMapper userMapper) {
         this.userService = userService;
+        this.tokenService = tokenService;
         this.userMapper = userMapper;
     }
 
@@ -45,7 +48,9 @@ public class UserBusiness {
             throw UserException.loginFailPasswordNotMatch();
         }
 
-        String result = "login Pass";
+
+
+        String result = tokenService.tokenize(user);
         return result;
     }
 

@@ -32,7 +32,6 @@ public class Car {
     @LastModifiedDate
     private Date updatedAt;
 
-    @OneToOne(mappedBy = "car_sizes")
-    private CarSize carSize;
+
 
 }

@@ -4,12 +4,14 @@ import com.noxilaman.carcareshop.entity.Car;
 import com.noxilaman.carcareshop.exception.BaseException;
 import com.noxilaman.carcareshop.exception.CarException;
 import com.noxilaman.carcareshop.exception.FileException;
+import com.noxilaman.carcareshop.mapper.CarMapper;
 import com.noxilaman.carcareshop.model.MCarReq;
+import com.noxilaman.carcareshop.model.MCarRes;
 import com.noxilaman.carcareshop.repository.CarRepository;
+import com.noxilaman.carcareshop.service.CarService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -17,13 +19,17 @@ import java.util.Objects;
 @Service
 public class CarBusiness {
 
+    private final CarService carService;
     private final CarRepository carRepository;
+    private final CarMapper carMapper;
 
-    public CarBusiness(CarRepository carRepository){
+    public CarBusiness(CarService carService, CarRepository carRepository, CarMapper carMapper){
+        this.carService = carService;
         this.carRepository = carRepository;
+        this.carMapper = carMapper;
     }
 
-    public String create(MCarReq mcarreq) throws BaseException {
+    public MCarRes create(MCarReq mcarreq) throws BaseException {
         if (mcarreq == null){
             throw CarException.allNull();
         }
@@ -35,17 +41,8 @@ public class CarBusiness {
             throw CarException.cityNull();
         }
 
-        if(carRepository.existsByslicensecode(mcarreq.getSLicenseCode())){
-            throw CarException.licenseCodeDuplication();
-        }
-        Car car = new Car();
-        car.setId(null);
-        car.setSlicensecode(mcarreq.getSLicenseCode());
-        car.setScity(mcarreq.getSCity());
-        car.setSnote(mcarreq.getSNote());
-        car.setIcarsize(mcarreq.getICarSize());
-        carRepository.save(car);
-        return "SAVE";
+        Car car = carService.create(mcarreq.getSLicenseCode(),mcarreq.getSCity(),mcarreq.getSNote(),mcarreq.getICarSize());
+        return carMapper.toMCarRes(car);
     }
 
     public MCarReq getCarById(Integer id){

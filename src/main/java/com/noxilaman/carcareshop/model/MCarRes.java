@@ -5,9 +5,9 @@ import lombok.Data;
 @Data
 public class MCarRes {
     private Integer id;
-    private String sLicenseCode;
-    private String sCity;
-    private int iCarSize;
-    private String sNote;
-    private MCarSizeRes mCarSizeRes;
+    private String slicensecode;
+    private String scity;
+    private int icarsize;
+    private String snote;
+
 }

@@ -4,6 +4,7 @@ import com.noxilaman.carcareshop.business.CarBusiness;
 import com.noxilaman.carcareshop.entity.Car;
 import com.noxilaman.carcareshop.exception.BaseException;
 import com.noxilaman.carcareshop.model.MCarReq;
+import com.noxilaman.carcareshop.model.MCarRes;
 import com.noxilaman.carcareshop.repository.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -45,9 +46,9 @@ public class CarApi {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<String> create(@RequestBody MCarReq req) throws BaseException {
+    public ResponseEntity<MCarRes> create(@RequestBody MCarReq req) throws BaseException {
 
-        String result = business.create(req);
+        MCarRes result = business.create(req);
             return ResponseEntity.ok(result);
 
     }

@@ -6,15 +6,12 @@ import org.mapstruct.IterableMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Named;
 
-import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface UserMapper {
 
     @Named("toMUserRes")
     MUserRes toMUserRes(User user);
-
-    //MUserRes toMUserRes(User user);
 
     @IterableMapping(qualifiedByName = "toMUserRes")
     @Named("mapListToMUserRes")

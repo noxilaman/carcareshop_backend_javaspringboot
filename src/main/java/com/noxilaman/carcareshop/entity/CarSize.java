@@ -17,10 +17,13 @@ public class CarSize {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer id;
-    @Column(nullable = false,length = 100)
+
+    @Column(nullable = false,length = 100,unique = true)
     private String name;
+
     @Column(length = 255)
     private String desc;
+
     @Column(nullable = false,length = 20)
     private String status;
 
